@@ -403,6 +403,22 @@ struct save_ostream_briefly {
 };
 
 
+//   make_a_pack_and_apply_it(F&&f);
+namespace detail {
+    template<typename T, typename F, T ...Idxs>
+    decltype(auto) make_a_pack_and_apply_it(std:: integer_sequence<T, Idxs...>, F&&f) {
+        return std::forward<F>(f) ( std:: integral_constant<T, Idxs>{} ... );
+    }
+}
+template<size_t N, typename T, typename F>
+decltype(auto) make_a_pack_and_apply_it(F&&f) {
+    return  detail:: make_a_pack_and_apply_it<T>
+            (   std:: make_index_sequence<N>{}
+            ,   std::forward<F>(f)
+            );
+}
+
+
 } // namespace utils
 
 #endif
