@@ -418,6 +418,16 @@ decltype(auto) make_a_pack_and_apply_it(F&&f) {
             );
 }
 
+template<char ... chars>
+struct char_pack {
+    constexpr static char   c_str0_[] =  {chars..., '\0'};
+
+    constexpr static size_t size()      { return sizeof...(chars); }
+    constexpr static char   const   (&c_str0(void)) [size()+1]     { return c_str0_; }
+};
+template<char ... chars>
+constexpr char   char_pack<chars...>:: c_str0_[];
+
 
 } // namespace utils
 
