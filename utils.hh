@@ -453,7 +453,31 @@ template<char ... chars>
 constexpr char   char_pack<chars...>:: c_str0_[];
 
 template<typename T, T c>
-constexpr std:: integral_constant<T, c>     cx_val  = {}; // Consider using my own type here instead of integral_constant?
+struct compile_time_constant_as_a_type {
+    constexpr
+    bool    operator==  (T other)   const   {   return c == other; }
+
+    constexpr
+    operator T  ()                  const   {   return c; }
+};
+
+template<typename T, T c>
+constexpr compile_time_constant_as_a_type<T, c>     cx_val  = {}; // Consider using my own type here instead of integral_constant?
+
+template<typename T, T c1, T c2>
+constexpr
+auto    operator+   (   compile_time_constant_as_a_type<T,c1>
+                    ,   compile_time_constant_as_a_type<T,c2>   )
+{
+    return cx_val<T, c1+c2>;
+}
+template<typename T, T c1, T c2>
+constexpr
+auto    operator==  (   compile_time_constant_as_a_type<T,c1>
+                    ,   compile_time_constant_as_a_type<T,c2>   )
+{
+    return cx_val<bool, c1==c2>;
+}
 
 } // namespace utils
 
