@@ -427,11 +427,11 @@ struct char_pack {
     constexpr static char   at(size_t i)        { return c_str0_[i]; }
     template<typename ...C>
     constexpr static size_t find_first_of(C ... targets) {
-        for(size_t i=0; i<size(); ++i) {
+        for(size_t i=0; i<   1+ size(); ++i) {
             if( !utils:: and_all( at(i) != targets ... ))
                 return i;
         }
-        return 0;
+        return -1;
     }
     template<size_t l>
     constexpr static auto   substr(void) {
