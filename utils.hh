@@ -424,6 +424,15 @@ struct char_pack {
 
     constexpr static size_t size()      { return sizeof...(chars); }
     constexpr static char   const   (&c_str0(void)) [size()+1]     { return c_str0_; }
+    constexpr static char   at(size_t i)        { return c_str0_[i]; }
+    template<typename ...C>
+    constexpr static size_t find_first_of(C ... targets) {
+        for(size_t i=0; i<size(); ++i) {
+            if( !utils:: and_all( at(i) != targets ... ))
+                return i;
+        }
+        return 0;
+    }
 };
 template<char ... chars>
 constexpr char   char_pack<chars...>:: c_str0_[];
