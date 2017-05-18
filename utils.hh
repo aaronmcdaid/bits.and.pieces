@@ -442,6 +442,7 @@ struct char_pack {
     }
     template<size_t b, size_t e>
     constexpr static auto   substr(void) {
+        static_assert( e>=b ,"");
         return
         make_a_pack_and_apply_it<e-b, size_t>([](auto ... idxs) {
             return utils:: char_pack< char_pack:: at(b+idxs) ... >{};
