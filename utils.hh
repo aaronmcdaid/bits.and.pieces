@@ -433,6 +433,20 @@ struct char_pack {
         }
         return 0;
     }
+    template<size_t l>
+    constexpr static auto   substr(void) {
+        return
+        make_a_pack_and_apply_it<l, size_t>([](auto ... idxs) {
+            return utils:: char_pack< char_pack:: at(idxs) ... >{};
+        });
+    }
+    template<size_t b, size_t e>
+    constexpr static auto   substr(void) {
+        return
+        make_a_pack_and_apply_it<e-b, size_t>([](auto ... idxs) {
+            return utils:: char_pack< char_pack:: at(b+idxs) ... >{};
+        });
+    }
 };
 template<char ... chars>
 constexpr char   char_pack<chars...>:: c_str0_[];
