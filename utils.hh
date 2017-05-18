@@ -452,6 +452,8 @@ struct char_pack {
 template<char ... chars>
 constexpr char   char_pack<chars...>:: c_str0_[];
 
+template<typename T, T c>
+constexpr std:: integral_constant<T, c>     cx_val  = {}; // Consider using my own type here instead of integral_constant?
 
 } // namespace utils
 
