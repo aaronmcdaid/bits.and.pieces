@@ -280,23 +280,14 @@ struct priority_tag : public priority_tag<i-1> {};
 template<>
 struct priority_tag<0> {};
 
-template<typename ...>
-struct and_all_impl;
-
-template<typename ...Ts>
+// and_all
+//auto and_all(void) = delete; // This seems to break gcc. Should consider a bug report
+template<typename T>
 constexpr
-auto and_all(Ts ...ts) { return and_all_impl<Ts...>::impl(ts...); }
-
-template<typename T0>
-struct and_all_impl<T0> {
-    static constexpr
-    T0  impl(T0 t0) { return t0; }
-};
+auto and_all(T t) { return t; }
 template<typename T0, typename T1, typename ...Ts>
-struct and_all_impl<T0, T1, Ts...> {
-    static constexpr
-    auto  impl(T0 t0, T1 t1, Ts ...ts) { return and_all(t0 && t1, ts...); }
-};
+constexpr
+auto and_all(T0 t0, T1 t1, Ts ...ts) { return and_all( t0&&t1, ts... ); }
 
 // This is my own 'apply', as it's officially only in c++17, not c++14
 namespace detail {
