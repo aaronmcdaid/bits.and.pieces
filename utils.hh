@@ -8,6 +8,7 @@
 #include <utility> // for tuple::get
 #include <vector>
 #include <string>
+#include <stdexcept>
 
 #include "ASSERT.hh"
 
@@ -454,22 +455,22 @@ struct compile_time_constant_as_a_type {
     operator T  ()                  const   {   return c; }
 };
 
-template<typename T, T c>
-constexpr compile_time_constant_as_a_type<T, c>     cx_val  = {}; // Consider using my own type here instead of integral_constant?
+//template<typename T, T c>
+//constexpr compile_time_constant_as_a_type<T, c>     cx_val  = compile_time_constant_as_a_type<T,c>{}; // Consider using my own type here instead of integral_constant?
 
 template<typename T, T c1, T c2>
 constexpr
 auto    operator+   (   compile_time_constant_as_a_type<T,c1>
                     ,   compile_time_constant_as_a_type<T,c2>   )
 {
-    return cx_val<T, c1+c2>;
+    return compile_time_constant_as_a_type<T, c1+c2>{};
 }
 template<typename T, T c1, T c2>
 constexpr
 auto    operator==  (   compile_time_constant_as_a_type<T,c1>
                     ,   compile_time_constant_as_a_type<T,c2>   )
 {
-    return cx_val<bool, c1==c2>;
+    return compile_time_constant_as_a_type<bool, c1==c2>{};
 }
 
 template<typename T, typename U>
