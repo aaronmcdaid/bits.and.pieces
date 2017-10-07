@@ -5,6 +5,7 @@
 #include <sstream>
 #include <vector>
 #include <cmath>
+#include <tuple> // for tuple::get
 #include <utility> // for tuple::get
 #include <vector>
 #include <string>
@@ -375,6 +376,10 @@ inline std:: string ELAPSED(void) {
 
 struct {} stdget0;
 struct {} stdget1;
+template<size_t I>
+struct tupget_t{};
+template<size_t I>
+auto tupget = tupget_t<I>{};
 template<typename T>
 decltype(auto) operator| (T&& t, decltype(stdget0)) {
     return std:: get<0>( std::forward<T>(t) );
@@ -382,6 +387,10 @@ decltype(auto) operator| (T&& t, decltype(stdget0)) {
 template<typename T>
 decltype(auto) operator| (T&& t, decltype(stdget1)) {
     return std:: get<1>( std::forward<T>(t) );
+}
+template<typename T, size_t I>
+decltype(auto) operator| (T&& t, tupget_t<I>) {
+    return std:: get<I>( std::forward<T>(t) );
 }
 
 struct save_ostream_briefly {
