@@ -68,6 +68,10 @@ template<typename F, typename G>
 std::ostream & operator<< (std:: ostream &o, const std:: tuple<F, G> &pr);
 template<typename F, typename G, typename H>
 std::ostream & operator<< (std:: ostream &o, const std:: tuple<F, G, H> &pr);
+template<typename F, typename G, typename H, typename I>
+std::ostream & operator<< (std:: ostream &o, const std:: tuple<F, G, H, I> &pr);
+template<typename F, typename G, typename H, typename I, typename J>
+std::ostream & operator<< (std:: ostream &o, const std:: tuple<F, G, H, I, J> &pr);
 template<typename T>
 auto operator<< (std:: ostream &o, T &t)
 -> decltype(  o << t.to_string() );
@@ -137,6 +141,34 @@ std::ostream & operator<< (std:: ostream &o, const std:: tuple<F, G, H> &pr) {
         << std::get<1>(pr)
         << ','
         << std::get<2>(pr)
+        << ')';
+    return o;
+}
+template<typename F, typename G, typename H, typename I>
+std::ostream & operator<< (std:: ostream &o, const std:: tuple<F, G, H, I> &pr) {
+    o << '('
+        << std::get<0>(pr)
+        << ','
+        << std::get<1>(pr)
+        << ','
+        << std::get<2>(pr)
+        << ','
+        << std::get<3>(pr)
+        << ')';
+    return o;
+}
+template<typename F, typename G, typename H, typename I, typename J>
+std::ostream & operator<< (std:: ostream &o, const std:: tuple<F, G, H, I, J> &pr) {
+    o << '('
+        << std::get<0>(pr)
+        << ','
+        << std::get<1>(pr)
+        << ','
+        << std::get<2>(pr)
+        << ','
+        << std::get<3>(pr)
+        << ','
+        << std::get<4>(pr)
         << ')';
     return o;
 }
