@@ -10,6 +10,7 @@
 #include <vector>
 #include <string>
 #include <stdexcept>
+#include <algorithm> // for shuffle
 
 #include "ASSERT.hh"
 
@@ -522,6 +523,12 @@ bool is_in(T && t, std:: initializer_list<U> l) {
     }
     return false;
 }
+
+template<typename Container, typename ... Ts>
+decltype(auto) shuffle(Container & c, Ts && ... ts) {
+    return std:: shuffle(c.begin(), c.end(), std::forward<Ts>(ts)...);
+}
+
 
 } // namespace utils
 
