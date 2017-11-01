@@ -529,6 +529,16 @@ bool startsWith(std:: string const & s, std:: string const & prefix) {
     return s.substr(0, prefix.length()) == prefix;
 }
 
+template<typename Container, typename ... Ts>
+decltype(auto) shuffle(Container & c, Ts && ... ts) {
+    return std:: shuffle(c.begin(), c.end(), std::forward<Ts>(ts)...);
+}
+template<typename Container, typename ... Ts>
+decltype(auto) sort(Container & c, Ts && ... ts) {
+    return std:: sort(c.begin(), c.end(), std::forward<Ts>(ts)...);
+}
+
+
 } // namespace utils
 
 #endif
