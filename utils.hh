@@ -528,6 +528,10 @@ template<typename Container, typename ... Ts>
 decltype(auto) shuffle(Container & c, Ts && ... ts) {
     return std:: shuffle(c.begin(), c.end(), std::forward<Ts>(ts)...);
 }
+template<typename Container, typename ... Ts>
+decltype(auto) sort(Container & c, Ts && ... ts) {
+    return std:: sort(c.begin(), c.end(), std::forward<Ts>(ts)...);
+}
 
 
 } // namespace utils
