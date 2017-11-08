@@ -488,6 +488,37 @@ struct char_pack {
 template<char ... chars>
 constexpr char   char_pack<chars...>:: c_str0_[];
 
+template<typename T>
+struct just_a_type {};
+
+template<typename T> constexpr
+just_a_type<T>
+type = {};
+
+template<typename T> constexpr auto
+as_type (T&&)
+{ return type<T>; }
+
+template< typename T , typename U >
+bool constexpr
+operator==(just_a_type<T>, just_a_type<U>) { return std::is_same<T,U>{}; }
+
+template< typename T , typename U >
+bool constexpr
+operator!=(just_a_type<T> t, just_a_type<U> u) { return !(t == u); }
+
+double   double_value();
+double&& double_rref();
+double&  double_lref();
+
+static_assert( type<int> == type<int> ,"");
+static_assert( type<int> != type<int&> ,"");
+static_assert( as_type(3.0f)                  == type<float   > ,"");
+static_assert( type<decltype(double_value())> == type<double  > ,"");
+static_assert( type<decltype(double_rref())>  == type<double&&> ,"");
+static_assert( type<decltype(double_lref())>  == type<double& > ,"");
+
+
 template<typename T, T c>
 struct compile_time_constant_as_a_type {
     constexpr
